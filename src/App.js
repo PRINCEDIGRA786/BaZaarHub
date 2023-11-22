@@ -1,24 +1,49 @@
 import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import axios from 'axios';
+import ChatGPT from './ChatGPT';
 
 function App() {
+  const [prompt, setprompt] = useState("");
+  const [response, setresponse] = useState("");
+  const handleSubmit = async (e) => {
+    // e.preventDefault();
+
+    // const response = await fetch('http://localhost:8080/chat', { prompt }, {
+    //   method: 'POST'  // Sending a POST request
+    // });
+    axios
+      .post("http://localhost:8080/chat", { prompt })
+      .then((res) => {
+        setresponse(res.data);
+      })
+      .catch((err) => {
+        console.error("The error is", err);
+      })
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <>
+      {/* <div>
+        <input
+          type='text'
+          value={prompt}
+          onChange={(e) => setprompt(e.target.value)}>
+        </input>
+        <button style={{ 'backgroundcolor': 'green' }}
+          onClick={() => {
+            handleSubmit();
+          }}>Submit</button>
+      </div>
+      <div>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          {response}
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+      </div> */}
+
+      <ChatGPT />
+    </>
   );
 }
 
